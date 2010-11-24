@@ -6,14 +6,21 @@ namespace KataPokerHands.Test
     public class PokerHandTest
     {
         [Test]
-        public void Should_find_a_pair_in_a_hand()
+        public void Should_find_a_pair_in_a_hand_when_the_hand_has_two_matching_cards()
         {
             var hand = "2H 5S 2D 9C KD";
             hand.IsPair().ShouldBeTrue();
         }
-        
+
         [Test]
-        public void Should_Find_Highest_Card()
+        public void Should_not_find_a_pair_when_the_hand_does_not_contain_two_matching_cards()
+        {
+            var hand = "2H 3S 4D 5C 6D";
+            hand.IsPair().ShouldBeFalse();
+        }
+
+        [Test]
+        public void Should_find_highest_card()
         {
             var hand = "2H 5S 2D 9C 3D";
             hand.HighestCard().ShouldEqual(9);

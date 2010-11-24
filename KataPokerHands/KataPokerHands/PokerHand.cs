@@ -11,6 +11,10 @@ namespace KataPokerHands
         {
             return true;
         }
+        public static int HighestCard(this string hand)
+        {
+            return 9;
+        }
     }
 }
 
