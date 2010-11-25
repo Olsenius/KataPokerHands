@@ -20,7 +20,8 @@ namespace KataPokerHands
         }
         public static int HighestCard(this string hand)
         {
-            return 9;
+            var cards = hand.Split(' ');
+            return cards.Max(card => int.Parse(card[0].ToString()));
         }
     }
 }
