@@ -27,9 +27,15 @@ namespace KataPokerHands.Test
         [TestCase("7H 7S 7D 7C 2D", 7)]
         [TestCase("8H 8S 8D 8C 2D", 8)]
         [TestCase("9H 9S 9D 9C 9D", 9)]
-        public void Should_find_highest_card_amongst_non_face_cards(string hand, int highest)
+        public void Should_find_highest_card_amongst_cards_identified_by_numbers(string hand, int highest)
         {
-            hand.HighestCard().ShouldEqual(highest);
+            hand.HighestCard().ShouldEqual(highest.ToString());
+        }
+
+        [Test]
+        public void Ten_should_be_higher_card_than_9()
+        {
+            "9H 9S 9D 9C TD".HighestCard().ShouldEqual("T");
         }
     }
 }
