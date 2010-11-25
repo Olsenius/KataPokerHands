@@ -20,6 +20,13 @@ namespace KataPokerHands.Test
         }
 
         [Test]
+        public void Should_not_find_a_pair_when_the_hand_does_not_contain_two_matching_cards()
+        {
+            var hand = "2H 3S 4D 5C 2D";
+            hand.WhatPokerHandIsIt().ToString().Equals("Pair");
+        }
+
+        [Test]
         public void Should_find_highest_card()
         {
             var hand = "2H 5S 2D 9C 3D";

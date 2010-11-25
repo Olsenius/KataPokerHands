@@ -9,7 +9,14 @@ namespace KataPokerHands
     {
         public static bool IsPair(this string hand)
         {
-            return true;
+            HashSet<int> s = new HashSet<int>();
+            foreach (string card in hand.Split(' '))
+            {
+                if(!s.Add(card[0])){
+                    return true;
+                }
+            }
+            return false;
         }
         public static int HighestCard(this string hand)
         {
