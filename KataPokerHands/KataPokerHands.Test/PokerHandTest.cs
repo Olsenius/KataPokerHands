@@ -19,18 +19,10 @@ namespace KataPokerHands.Test
             hand.IsPair().ShouldBeFalse();
         }
 
-        [Test]
-        public void Should_not_find_a_pair_when_the_hand_does_not_contain_two_matching_cards()
+        [TestCase("9H 9S 9D 9C 9D",9)]
+        public void Should_find_highest_card_amongst_non_face_cards(string hand, int highest)
         {
-            var hand = "2H 3S 4D 5C 2D";
-            hand.WhatPokerHandIsIt().ToString().Equals("Pair");
-        }
-
-        [Test]
-        public void Should_find_highest_card()
-        {
-            var hand = "2H 5S 2D 9C 3D";
-            hand.HighestCard().ShouldEqual(9);
+            hand.HighestCard().ShouldEqual(highest);
         }
     }
 }
