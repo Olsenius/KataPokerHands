@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace KataPokerHands
@@ -10,6 +10,11 @@ namespace KataPokerHands
         public PokerHand(string hand)
         {
             _hand = hand;
+        }
+
+        public bool Beats(PokerHand other) 
+        {
+            return true;
         }
 
         public string HighestCard()

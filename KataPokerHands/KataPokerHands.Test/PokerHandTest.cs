@@ -38,13 +38,13 @@ namespace KataPokerHands.Test
             hand.IsPair().ShouldBeFalse();
         }
 
-        [Test]
-        public void Should_rank_poker_hands_with_only_high_card_correct()
+        [TestCase("2H JS TD AC 2D", "3H JS QD 3C 2D", true)]
+        [TestCase("KH JS QD 4C 2D", "5H AS 6D 7C KD", false)]
+        public void Should_rank_poker_hands_with_only_high_card_correct(string s1, string s2, bool hand1beadshand2)
         {
-            var hand = new PokerHand("2H");
-            var betterHand = new PokerHand("3H");
-
-            betterHand.Beats(hand).ShouldBeTrue();
+            var hand1 = new PokerHand(s1);
+            var hand2 = new PokerHand(s2);
+            hand1.Beats(hand2).ShouldEqual(hand1beadshand2);
         }
     }
 }
