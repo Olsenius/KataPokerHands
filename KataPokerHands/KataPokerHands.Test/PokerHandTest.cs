@@ -40,11 +40,19 @@ namespace KataPokerHands.Test
 
         [TestCase("2H JS TD AC 2D", "3H JS QD 3C 2D", true)]
         [TestCase("KH JS QD 4C 2D", "5H AS 6D 7C KD", false)]
-        public void Should_rank_poker_hands_with_only_high_card_correct(string s1, string s2, bool hand1beadshand2)
+        public void Should_rank_poker_hands_with_only_high_card_correct(string firstHand, string secondHand, bool firstHandShouldWinn)
         {
-            var hand1 = new PokerHand(s1);
-            var hand2 = new PokerHand(s2);
-            hand1.Beats(hand2).ShouldEqual(hand1beadshand2);
+            var hand1 = new PokerHand(firstHand);
+            var hand2 = new PokerHand(secondHand);
+            hand1.Beats(hand2).ShouldEqual(firstHandShouldWinn);
+        }
+
+        [Test]
+        public void Should_use_second_highest_card_if_highest_cards_are_equal()
+        {
+            var hand1 = new PokerHand("AD KD");
+            var hand2 = new PokerHand("AC 2D");
+            hand1.Beats(hand2).ShouldBeTrue();
         }
     }
 }

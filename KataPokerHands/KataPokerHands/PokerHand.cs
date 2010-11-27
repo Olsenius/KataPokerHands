@@ -12,9 +12,9 @@ namespace KataPokerHands
             _hand = hand;
         }
 
-        public bool Beats(PokerHand other) 
+        public bool Beats(PokerHand other)
         {
-            return true;
+            return GetCardValueAsInt(HighestCard()) > GetCardValueAsInt(other.HighestCard());
         }
 
         public string HighestCard()
