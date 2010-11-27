@@ -5,20 +5,6 @@ namespace KataPokerHands.Test
     [TestFixture]
     public class PokerHandTest
     {
-        [Test]
-        public void Should_find_a_pair_in_a_hand_when_the_hand_has_two_matching_cards()
-        {
-            var hand = new PokerHand("2H 5S 2D 9C KD");
-            hand.IsPair().ShouldBeTrue();
-        }
-
-        [Test]
-        public void Should_not_find_a_pair_when_the_hand_does_not_contain_two_matching_cards()
-        {
-            var hand = new PokerHand("2H 3S 4D 5C 6D");
-            hand.IsPair().ShouldBeFalse();
-        }
-
         [TestCase("2H 2S 2D 2C 2D", "2")]
         [TestCase("3H 3S 3D 3C 2D", "3")]
         [TestCase("4H 4S 4D 4C 2D", "4")]
@@ -36,6 +22,29 @@ namespace KataPokerHands.Test
         {
             var pokerHand = new PokerHand(hand);
             pokerHand.HighestCard().ShouldEqual(highest);
+        }
+
+        [Test]
+        public void Should_find_a_pair_in_a_hand_when_the_hand_has_two_matching_cards()
+        {
+            var hand = new PokerHand("2H 5S 2D 9C KD");
+            hand.IsPair().ShouldBeTrue();
+        }
+
+        [Test]
+        public void Should_not_find_a_pair_when_the_hand_does_not_contain_two_matching_cards()
+        {
+            var hand = new PokerHand("2H 3S 4D 5C 6D");
+            hand.IsPair().ShouldBeFalse();
+        }
+
+        [Test]
+        public void Should_rank_poker_hands_with_only_high_card_correct()
+        {
+            var hand = new PokerHand("2H");
+            var betterHand = new PokerHand("3H");
+
+            betterHand.Beats(hand).ShouldBeTrue();
         }
     }
 }
