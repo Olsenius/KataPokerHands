@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace KataPokerHands
 {
@@ -17,7 +15,11 @@ namespace KataPokerHands
             {"7", 7},
             {"8", 8},
             {"9", 9},
-            {"T", 10}
+            {"T", 10},
+            {"J", 11},
+            {"Q", 12},
+            {"K", 13},
+            {"A", 14},
         };
         public static bool IsPair(this string hand)
         {
