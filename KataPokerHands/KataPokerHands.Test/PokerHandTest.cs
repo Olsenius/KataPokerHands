@@ -32,10 +32,14 @@ namespace KataPokerHands.Test
             hand.HighestCard().ShouldEqual(highest.ToString());
         }
 
-        [Test]
-        public void Ten_should_be_higher_card_than_9()
+        [TestCase("9H 9S 9D 9C TD", "T")]
+        [TestCase("2H JS TD 2C 2D", "J")]
+        [TestCase("3H JS QD 3C 2D", "Q")]
+        [TestCase("KH JS QD 4C 2D", "K")]
+        [TestCase("5H AS 5D 5C KD", "A")]
+        public void Should_find_highest_card_amongst_cards_over_nine(string hand, string highest)
         {
-            "9H 9S 9D 9C TD".HighestCard().ShouldEqual("T");
+            hand.HighestCard().ShouldEqual(highest);
         }
     }
 }
