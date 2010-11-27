@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 
 namespace KataPokerHands
@@ -15,14 +14,7 @@ namespace KataPokerHands
         public string HighestCard()
         {
             var cards = _hand.Split(' ');
-            return GetCardValueAsText(cards.Max(x => GetCardValue(x)));
-        }
-
-        private int GetCardValue(string card)
-        {
-            var value = card[0].ToString();
-
-            return _cardValues.First(kv => kv.Key == value).Value;
+            return GetCardValueAsText(cards.Max(x => GetCardValueAsInt(x)));
         }
 
         private static string GetCardValueAsText(int card)
@@ -42,8 +34,26 @@ namespace KataPokerHands
                 default:
                     return card.ToString();
             }
+        } 
+        
+        private static int GetCardValueAsInt(string card)
+        {
+            var cardValue = card[0].ToString();
+            switch (cardValue)
+            {
+                case "T":
+                    return 10;
+                case "J":
+                    return 11;
+                case "Q":
+                    return 12;
+                case "K":
+                    return 13;
+                case "A":
+                    return 14;
+                default:
+                    return int.Parse(cardValue);
+            }
         }
-
-        private Dictionary<string, int> _cardValues = new Dictionary<string, int>() { { "2", 2 }, { "3", 3 }, { "4", 4 }, { "5", 5 }, { "6", 6 }, { "7", 7 }, { "8", 8 }, { "9", 9 }, { "T", 10 }, { "J", 11 }, { "Q", 12 }, { "K", 13 }, { "A", 14 }, };
     }
 }
