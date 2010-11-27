@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 
 namespace KataPokerHands
@@ -34,8 +35,8 @@ namespace KataPokerHands
                 default:
                     return card.ToString();
             }
-        } 
-        
+        }
+
         private static int GetCardValueAsInt(string card)
         {
             var cardValue = card[0].ToString();
@@ -54,6 +55,19 @@ namespace KataPokerHands
                 default:
                     return int.Parse(cardValue);
             }
+        }
+
+        public bool IsPair()
+        {
+            HashSet<int> s = new HashSet<int>();
+            foreach (string card in _hand.Split(' '))
+            {
+                if (!s.Add(card[0]))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
