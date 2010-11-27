@@ -27,18 +27,12 @@ namespace KataPokerHands.Test
         [TestCase("7H 7S 7D 7C 2D", "7")]
         [TestCase("8H 8S 8D 8C 2D", "8")]
         [TestCase("9H 9S 9D 9C 9D", "9")]
-        public void Should_find_highest_card_amongst_cards_identified_by_numbers(string hand, string highest)
-        {
-            var pokerHand = new PokerHand(hand);
-            pokerHand.HighestCard().ShouldEqual(highest);
-        }
-
         [TestCase("9H 9S 9D 9C TD", "T")]
         [TestCase("2H JS TD 2C 2D", "J")]
         [TestCase("3H JS QD 3C 2D", "Q")]
         [TestCase("KH JS QD 4C 2D", "K")]
         [TestCase("5H AS 5D 5C KD", "A")]
-        public void Should_find_highest_card_amongst_cards_over_nine(string hand, string highest)
+        public void Should_find_highest_card(string hand, string highest)
         {
             var pokerHand = new PokerHand(hand);
             pokerHand.HighestCard().ShouldEqual(highest);
