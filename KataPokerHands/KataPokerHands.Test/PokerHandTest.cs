@@ -1,3 +1,4 @@
+using System.Linq;
 using NUnit.Framework;
 
 namespace KataPokerHands.Test
@@ -18,10 +19,10 @@ namespace KataPokerHands.Test
         [TestCase("3H JS QD 3C 2D", "Q")]
         [TestCase("KH JS QD 4C 2D", "K")]
         [TestCase("5H AS 5D 5C KD", "A")]
-        public void Should_find_highest_card(string hand, string highest)
+        public void Should_find_highest_card_value(string hand, string highest)
         {
             var pokerHand = new PokerHand(hand);
-            pokerHand.HighestCard().ShouldEqual(highest);
+            pokerHand.HighestCardValue().ShouldEqual(highest);
         }
 
         [Test]

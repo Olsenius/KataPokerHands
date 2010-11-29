@@ -14,13 +14,12 @@ namespace KataPokerHands
 
         public bool Beats(PokerHand other)
         {
-            return GetCardValueAsInt(HighestCard()) >= GetCardValueAsInt(other.HighestCard());
+            return GetCardValueAsInt(HighestCardValue()) >= GetCardValueAsInt(other.HighestCardValue());
         }
 
-        public string HighestCard()
+        public string HighestCardValue()
         {
-            var cards = _hand.Split(' ');
-            return GetCardValueAsText(cards.Max(x => GetCardValueAsInt(x)));
+            return _hand.Split(' ').ToList().OrderByDescending(GetCardValueAsInt).FirstOrDefault().Substring(0,1);
         }
 
         private static string GetCardValueAsText(int card)
