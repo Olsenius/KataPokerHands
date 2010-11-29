@@ -1,4 +1,3 @@
-using System.Linq;
 using NUnit.Framework;
 
 namespace KataPokerHands.Test
@@ -28,7 +27,7 @@ namespace KataPokerHands.Test
         [Test]
         public void Should_find_a_pair_in_a_hand_when_the_hand_has_two_matching_cards()
         {
-            var hand = new PokerHand("2H 5S 2D 9C KD");
+            var hand = new PokerHand("2H 2D");
             hand.IsPair().ShouldBeTrue();
         }
 
@@ -39,20 +38,15 @@ namespace KataPokerHands.Test
             hand.IsPair().ShouldBeFalse();
         }
 
-        [TestCase("2H JS TD AC 2D", "3H JS QD 3C 2D", true)]
-        [TestCase("KH JS QD 4C 2D", "5H AS 6D 7C KD", false)]
-        public void Should_rank_poker_hands_with_only_high_card_correct(string firstHand, string secondHand, bool firstHandShouldWinn)
+        [TestCase("AA", "KK")]
+        [TestCase("AA, AA", "AA, KK")]
+        [TestCase("AA, AA, AA", "AA, AA, KK")]
+        [TestCase("AA, AA, AA, AA", "AA, AA, AA, KK")]
+        [TestCase("AA, AA, AA, AA, AA", "AA, AA, AA, AA, KK")]
+        public void Beats_should_use_first_unlike_highest_card_if_highest_cards_are_equal(string bestHand, string worstHand)
         {
-            var hand1 = new PokerHand(firstHand);
-            var hand2 = new PokerHand(secondHand);
-            hand1.Beats(hand2).ShouldEqual(firstHandShouldWinn);
-        }
-
-        [Test]
-        public void Should_use_second_highest_card_if_highest_cards_are_equal()
-        {
-            var hand1 = new PokerHand("AD KD");
-            var hand2 = new PokerHand("AC 2D");
+            var hand1 = new PokerHand(bestHand);
+            var hand2 = new PokerHand(worstHand);
             hand1.Beats(hand2).ShouldBeTrue();
             hand2.Beats(hand1).ShouldBeFalse();
         }
