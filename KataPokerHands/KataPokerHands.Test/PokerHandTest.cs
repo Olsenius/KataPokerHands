@@ -54,5 +54,15 @@ namespace KataPokerHands.Test
             var hand2 = new PokerHand("AC 2D");
             hand1.Beats(hand2).ShouldBeTrue();
         }
+
+        [TestCase("2H JS TD AC 2D", "3H JS QD AC 2D", false)]
+        [TestCase("KH JS QD 4C 2D", "5H KS 6D 7C KD", true)]
+        [TestCase("QH JS 8D 4C 2D", "5H QS 6D 7C 8D", false)]
+        public void Should_use_second_highest_card_if_highest_cards_are_equal_test_2(string firstHand, string secondHand, bool firstHandShouldWinn)
+        {
+            var hand1 = new PokerHand(firstHand);
+            var hand2 = new PokerHand(secondHand);
+            hand1.Beats(hand2).ShouldEqual(firstHandShouldWinn);
+        }
     }
 }

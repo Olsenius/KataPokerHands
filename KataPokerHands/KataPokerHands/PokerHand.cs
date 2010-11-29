@@ -14,7 +14,7 @@ namespace KataPokerHands
 
         public bool Beats(PokerHand other)
         {
-            return GetCardValueAsInt(HighestCard()) > GetCardValueAsInt(other.HighestCard());
+            return GetCardValueAsInt(HighestCard()) >= GetCardValueAsInt(other.HighestCard());
         }
 
         public string HighestCard()
