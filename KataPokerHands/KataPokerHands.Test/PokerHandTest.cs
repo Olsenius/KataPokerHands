@@ -43,10 +43,19 @@ namespace KataPokerHands.Test
         [TestCase("AA, AA, AA", "AA, AA, KK")]
         [TestCase("AA, AA, AA, AA", "AA, AA, AA, KK")]
         [TestCase("AA, AA, AA, AA, AA", "AA, AA, AA, AA, KK")]
-        public void Beats_should_use_first_unlike_highest_card_if_highest_cards_are_equal(string bestHand, string worstHand)
+        public void Beats_should_use_first_unlike_highest_card(string bestHand, string worstHand)
         {
             var hand1 = new PokerHand(bestHand);
             var hand2 = new PokerHand(worstHand);
+            hand1.Beats(hand2).ShouldBeTrue();
+            hand2.Beats(hand1).ShouldBeFalse();
+        }
+
+        [Test]
+        public void Pair_should_beat_high_card_only()
+        {
+            var hand1 = new PokerHand("2D 2C");
+            var hand2 = new PokerHand("AA 2H");
             hand1.Beats(hand2).ShouldBeTrue();
             hand2.Beats(hand1).ShouldBeFalse();
         }
