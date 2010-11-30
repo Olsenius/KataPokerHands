@@ -60,6 +60,7 @@ namespace KataPokerHands.Test
             hand1.Beats(hand2).ShouldBeTrue();
             hand2.Beats(hand1).ShouldBeFalse();
         }
+
         [Test]
         public void Pair_should_beat_higher_pair()
         {

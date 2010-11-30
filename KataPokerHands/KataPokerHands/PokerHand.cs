@@ -5,7 +5,7 @@ namespace KataPokerHands
 {
     public class PokerHand
     {
-        public enum handType { HighCard, Pair, TreeOfAKind, Stragiht, Flush, FullHouse, FourOfAKind, StraightFlush }
+        public enum HandType { HighCard, Pair,}
         private readonly string _hand;
 
         public PokerHand(string hand)
@@ -13,15 +13,14 @@ namespace KataPokerHands
             _hand = hand;
         }
 
-        public handType typeOfHand()
+        public HandType TypeOfHand()
         {
             if (IsPair())
-            {
-                return handType.Pair;
-            }
-            return handType.HighCard;
+                return HandType.Pair;
+            return HandType.HighCard;
         }
-        public bool highCardBeats(PokerHand other)
+
+        public bool HighCardBeats(PokerHand other)
         {
             var myCards = CardsOrderedByValue().Select(GetCardValueAsInt).ToArray();
             var otherCards = other.CardsOrderedByValue().Select(GetCardValueAsInt).ToArray();
@@ -33,13 +32,14 @@ namespace KataPokerHands
             }
             return false;
         }
+
         public bool Beats(PokerHand other)
         {
-            if (typeOfHand() != other.typeOfHand())
+            if (TypeOfHand() != other.TypeOfHand())
             {
-                return typeOfHand() > other.typeOfHand();
+                return TypeOfHand() > other.TypeOfHand();
             }
-            return highCardBeats(other);
+            return HighCardBeats(other);
         }
 
         public string HighestCardValue()
