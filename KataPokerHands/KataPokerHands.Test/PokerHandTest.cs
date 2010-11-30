@@ -38,12 +38,12 @@ namespace KataPokerHands.Test
             hand.IsPair().ShouldBeFalse();
         }
 
-        [TestCase("AA", "KK")]
-        [TestCase("AA, AA", "AA, KK")]
-        [TestCase("AA, AA, AA", "AA, AA, KK")]
-        [TestCase("AA, AA, AA, AA", "AA, AA, AA, KK")]
-        [TestCase("AA, AA, AA, AA, AA", "AA, AA, AA, AA, KK")]
-        [TestCase("KH JS QD 4C 3D", "KH JS QD 4C 2D")]
+        [TestCase("AA",                 "2C")]
+        [TestCase("AA, KK",             "AA, 2C")]
+        [TestCase("AA, KK, QQ",         "AA, KK, 2C")]
+        [TestCase("AA, KK, QQ, JJ",     "AA, KK, QQ, 2C")]
+        [TestCase("AA, KK, QQ, JJ, TT", "AA, KK, QQ, JJ, 2C")]
+        [TestCase("KH JS QD 4C 3D",     "KH JS QD 4C 2D")]
         public void Beats_should_use_first_unlike_highest_card(string bestHand, string worstHand)
         {
             var hand1 = new PokerHand(bestHand);

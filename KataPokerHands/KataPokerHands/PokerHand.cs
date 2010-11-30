@@ -5,8 +5,10 @@ namespace KataPokerHands
 {
     public class PokerHand
     {
-        public enum HandType { HighCard, Pair,}
+        public enum HandType { HighCard, Pair, }
         private readonly string _hand;
+
+        public IEnumerable<string> CardsUsedInBestHand { get; private set; }
 
         public PokerHand(string hand)
         {
@@ -39,6 +41,13 @@ namespace KataPokerHands
             {
                 return TypeOfHand() > other.TypeOfHand();
             }
+            if (TypeOfHand() == HandType.Pair)
+            {
+                var myCardValue = GetCardValueAsInt(CardsUsedInBestHand.First());
+                var otherHandCardValue = GetCardValueAsInt(other.CardsUsedInBestHand.First());
+                return myCardValue > otherHandCardValue;
+            }
+
             return HighCardBeats(other);
         }
 
@@ -79,9 +88,11 @@ namespace KataPokerHands
             {
                 if (!s.Add(card[0]))
                 {
+                    CardsUsedInBestHand = CardsOrderedByValue().Where(x => GetCardValueAsInt(x) == GetCardValueAsInt(card));
                     return true;
                 }
             }
+            //_cardsUsedInBestHand = Enumerable.Empty<string>();
             return false;
         }
     }
