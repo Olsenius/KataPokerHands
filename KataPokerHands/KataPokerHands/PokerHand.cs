@@ -5,7 +5,7 @@ namespace KataPokerHands
 {
     public class PokerHand
     {
-        public enum handType {HighCard, Pair, TreeOfAKind, Stragiht, Flush, FullHouse, FourOfAKind, StraightFlush}
+        public enum handType { HighCard, Pair, TreeOfAKind, Stragiht, Flush, FullHouse, FourOfAKind, StraightFlush }
         private readonly string _hand;
 
         public PokerHand(string hand)
@@ -21,7 +21,8 @@ namespace KataPokerHands
             }
             return handType.HighCard;
         }
-        public bool highCardBeats(PokerHand other) {
+        public bool highCardBeats(PokerHand other)
+        {
             var myCards = CardsOrderedByValue().Select(GetCardValueAsInt).ToArray();
             var otherCards = other.CardsOrderedByValue().Select(GetCardValueAsInt).ToArray();
 
@@ -38,10 +39,7 @@ namespace KataPokerHands
             {
                 return typeOfHand() > other.typeOfHand();
             }
-            else
-            {
-                return highCardBeats(other);
-            }
+            return highCardBeats(other);
         }
 
         public string HighestCardValue()
@@ -52,26 +50,6 @@ namespace KataPokerHands
         private IEnumerable<string> CardsOrderedByValue()
         {
             return _hand.Split(' ').ToList().OrderByDescending(GetCardValueAsInt);
-        }
-
-
-        private static string GetCardValueAsText(int card)
-        {
-            switch (card)
-            {
-                case 10:
-                    return "T";
-                case 11:
-                    return "J";
-                case 12:
-                    return "Q";
-                case 13:
-                    return "K";
-                case 14:
-                    return "A";
-                default:
-                    return card.ToString();
-            }
         }
 
         private static int GetCardValueAsInt(string card)
