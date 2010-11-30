@@ -38,12 +38,12 @@ namespace KataPokerHands.Test
             hand.IsPair().ShouldBeFalse();
         }
 
-        [TestCase("AA",                 "2C")]
-        [TestCase("AA, KK",             "AA, 2C")]
-        [TestCase("AA, KK, QQ",         "AA, KK, 2C")]
-        [TestCase("AA, KK, QQ, JJ",     "AA, KK, QQ, 2C")]
+        [TestCase("AA", "2C")]
+        [TestCase("AA, KK", "AA, 2C")]
+        [TestCase("AA, KK, QQ", "AA, KK, 2C")]
+        [TestCase("AA, KK, QQ, JJ", "AA, KK, QQ, 2C")]
         [TestCase("AA, KK, QQ, JJ, TT", "AA, KK, QQ, JJ, 2C")]
-        [TestCase("KH JS QD 4C 3D",     "KH JS QD 4C 2D")]
+        [TestCase("KH JS QD 4C 3D", "KH JS QD 4C 2D")]
         public void Beats_should_use_first_unlike_highest_card(string bestHand, string worstHand)
         {
             var hand1 = new PokerHand(bestHand);
@@ -68,6 +68,15 @@ namespace KataPokerHands.Test
             var hand2 = new PokerHand("2H 3A 3H");
             hand1.Beats(hand2).ShouldBeFalse();
             hand2.Beats(hand1).ShouldBeTrue();
+        }
+
+        [Test]
+        public void Equal_pairs_should_use_high_card_to_determine_winner()
+        {
+            var hand1 = new PokerHand("2D 2C AC KC TD");
+            var hand2 = new PokerHand("2H 2S AD KC 9C");
+            hand1.Beats(hand2).ShouldBeTrue();
+            hand2.Beats(hand1).ShouldBeFalse();
         }
     }
 }

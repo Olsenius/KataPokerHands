@@ -5,9 +5,9 @@ namespace KataPokerHands
 {
     public class PokerHand
     {
-        public enum HandType { HighCard, Pair, }
         private readonly string _hand;
 
+        private enum HandType { HighCard, Pair, }
         public IEnumerable<string> CardsUsedInBestHand { get; private set; }
 
         public PokerHand(string hand)
@@ -15,14 +15,44 @@ namespace KataPokerHands
             _hand = hand;
         }
 
-        public HandType TypeOfHand()
+        public bool Beats(PokerHand other)
+        {
+            if (TypesArentEqual(other))
+            {
+                return MyTypeIsBetter(other);
+            }
+            if (TypeOfHand() == HandType.Pair)
+            {
+                return MyPairIsBetter(other);
+            }
+            return MyHighCardIsBetter(other);
+        }
+
+        private HandType TypeOfHand()
         {
             if (IsPair())
                 return HandType.Pair;
             return HandType.HighCard;
         }
 
-        public bool HighCardBeats(PokerHand other)
+        private bool TypesArentEqual(PokerHand other)
+        {
+            return TypeOfHand() != other.TypeOfHand();
+        }
+
+        private bool MyTypeIsBetter(PokerHand other)
+        {
+            return TypeOfHand() > other.TypeOfHand();
+        }
+
+        private bool MyPairIsBetter(PokerHand other)
+        {
+            var myCardValue = GetCardValueAsInt(CardsUsedInBestHand.First());
+            var otherHandCardValue = GetCardValueAsInt(other.CardsUsedInBestHand.First());
+            return myCardValue >= otherHandCardValue;
+        }
+
+        private bool MyHighCardIsBetter(PokerHand other)
         {
             var myCards = CardsOrderedByValue().Select(GetCardValueAsInt).ToArray();
             var otherCards = other.CardsOrderedByValue().Select(GetCardValueAsInt).ToArray();
@@ -33,22 +63,6 @@ namespace KataPokerHands
                     return myCards[i] >= otherCards[i];
             }
             return false;
-        }
-
-        public bool Beats(PokerHand other)
-        {
-            if (TypeOfHand() != other.TypeOfHand())
-            {
-                return TypeOfHand() > other.TypeOfHand();
-            }
-            if (TypeOfHand() == HandType.Pair)
-            {
-                var myCardValue = GetCardValueAsInt(CardsUsedInBestHand.First());
-                var otherHandCardValue = GetCardValueAsInt(other.CardsUsedInBestHand.First());
-                return myCardValue > otherHandCardValue;
-            }
-
-            return HighCardBeats(other);
         }
 
         public string HighestCardValue()
@@ -92,7 +106,6 @@ namespace KataPokerHands
                     return true;
                 }
             }
-            //_cardsUsedInBestHand = Enumerable.Empty<string>();
             return false;
         }
     }
