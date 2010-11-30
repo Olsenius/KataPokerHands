@@ -63,8 +63,8 @@ namespace KataPokerHands.Test
         [Test]
         public void Pair_should_beat_higher_pair()
         {
-            var hand1 = new PokerHand("AS 2D 2C");
-            var hand2 = new PokerHand("KS 3A 3H");
+            var hand1 = new PokerHand("2D 2C");
+            var hand2 = new PokerHand("3A 3H");
             hand1.Beats(hand2).ShouldBeFalse();
             hand2.Beats(hand1).ShouldBeTrue();
         }
