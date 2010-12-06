@@ -87,5 +87,14 @@ namespace KataPokerHands.Test
             hand1.Beats(hand2).ShouldBeTrue();
             hand2.Beats(hand1).ShouldBeFalse();
         }
+
+        [Test]
+        public void Three_of_a_kind_should_beat_lower_three_of_a_kind()
+        {
+            var hand1 = new PokerHand("2D 2C 2S");
+            var hand2 = new PokerHand("3H 3S 3D");
+            hand1.Beats(hand2).ShouldBeTrue();
+            hand2.Beats(hand1).ShouldBeFalse();
+        }
     }
 }
