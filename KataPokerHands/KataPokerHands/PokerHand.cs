@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace KataPokerHands
@@ -7,7 +8,7 @@ namespace KataPokerHands
     {
         private readonly string _hand;
 
-        private enum HandType { HighCard, Pair, }
+        private enum HandType { HighCard, Pair, ThreeOfAKind }
         public IEnumerable<string> CardsUsedInBestHand { get; private set; }
 
         public PokerHand(string hand)
@@ -30,9 +31,19 @@ namespace KataPokerHands
 
         private HandType TypeOfHand()
         {
+            if (IsThreeOfAKind())
+                return HandType.ThreeOfAKind;
+
             if (IsPair())
                 return HandType.Pair;
             return HandType.HighCard;
+        }
+
+        private bool IsThreeOfAKind()
+        {
+            return CardsOrderedByValue()
+                .GroupBy(GetCardValueAsInt)
+                .Any(group => group.Count() == 3);
         }
 
         private bool TypesArentEqual(PokerHand other)
