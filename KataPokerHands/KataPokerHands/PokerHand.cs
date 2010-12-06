@@ -49,6 +49,10 @@ namespace KataPokerHands
         {
             var myCardValue = GetCardValueAsInt(CardsUsedInBestHand.First());
             var otherHandCardValue = GetCardValueAsInt(other.CardsUsedInBestHand.First());
+            if (myCardValue == otherHandCardValue)
+            {
+                return MyHighCardIsBetter(other);
+            }
             return myCardValue >= otherHandCardValue;
         }
 
