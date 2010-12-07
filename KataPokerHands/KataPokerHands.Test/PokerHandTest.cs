@@ -96,5 +96,14 @@ namespace KataPokerHands.Test
             hand1.Beats(hand2).ShouldBeTrue();
             hand2.Beats(hand1).ShouldBeFalse();
         }
+
+        [Test]
+        public void Three_of_a_kind_should_use_kicker_when_equel()
+        {
+            var hand1 = new PokerHand("2D 2C 2S AS");
+            var hand2 = new PokerHand("2H 2S 2D KS");
+            hand1.Beats(hand2).ShouldBeTrue();
+            hand2.Beats(hand1).ShouldBeFalse();
+        }
     }
 }

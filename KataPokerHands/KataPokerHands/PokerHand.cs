@@ -22,11 +22,20 @@ namespace KataPokerHands
             {
                 return MyTypeIsBetter(other);
             }
+            if (TypeOfHand() == HandType.ThreeOfAKind)
+            {
+                return MyThreeOfAKindIsBetter(other);
+            }
             if (TypeOfHand() == HandType.Pair)
             {
                 return MyPairIsBetter(other);
             }
             return MyHighCardIsBetter(other);
+        }
+
+        private bool MyThreeOfAKindIsBetter(PokerHand other)
+        {
+            return CardsUsedInBestHand.First().Substring(0, 1).CompareTo(other.CardsUsedInBestHand.First().Substring(0, 1)) < 0;
         }
 
         private HandType TypeOfHand()
@@ -41,9 +50,17 @@ namespace KataPokerHands
 
         private bool IsThreeOfAKind()
         {
-            return CardsOrderedByValue()
-                .GroupBy(GetCardValueAsInt)
-                .Any(group => group.Count() == 3);
+            var groupOfCards = CardsOrderedByValue().GroupBy(GetCardValueAsInt);
+
+                foreach (IGrouping<int, string> group in groupOfCards)
+                {
+                    if (group.Count() == 3)
+                    {
+                        CardsUsedInBestHand = group.Cast<string>(); ;
+                        return true;
+                    }   
+                }
+                return false;
         }
 
         private bool TypesArentEqual(PokerHand other)
