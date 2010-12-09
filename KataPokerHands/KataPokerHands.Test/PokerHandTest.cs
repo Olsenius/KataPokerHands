@@ -114,5 +114,14 @@ namespace KataPokerHands.Test
             hand1.Beats(hand2).ShouldBeTrue();
             hand2.Beats(hand1).ShouldBeFalse();
         }
+
+        [Test]
+        public void Straigth_should_beat_three_of_a_kind()
+        {
+            var straight = new PokerHand("2C 3C 4D 5C 6C");
+            var threeOfAKind = new PokerHand("AC AD AH");
+            straight.Beats(threeOfAKind).ShouldBeTrue();
+            threeOfAKind.Beats(straight).ShouldBeFalse();
+        }
     }
 }
