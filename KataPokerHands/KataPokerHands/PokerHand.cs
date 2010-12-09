@@ -24,21 +24,12 @@ namespace KataPokerHands
             }
             if (TypeOfHand() == HandType.ThreeOfAKind)
             {
-                return MyThreeOfAKindIsBetter(other);
+                return MyMatchingCardsAreBetter(other);
             }
             if (TypeOfHand() == HandType.Pair)
             {
-                return MyPairIsBetter(other);
+                return MyMatchingCardsAreBetter(other);
             }
-            return MyHighCardIsBetter(other);
-        }
-
-        private bool MyThreeOfAKindIsBetter(PokerHand other)
-        {
-            var  myTripleValue = GetCardValueAsInt(CardsUsedInBestHand.FirstOrDefault());
-            var otherTriplevalue = GetCardValueAsInt(other.CardsUsedInBestHand.FirstOrDefault());
-            if ( myTripleValue != otherTriplevalue)
-                return  myTripleValue > otherTriplevalue;
             return MyHighCardIsBetter(other);
         }
 
@@ -50,11 +41,6 @@ namespace KataPokerHands
             if (IsPair())
                 return HandType.Pair;
             return HandType.HighCard;
-        }
-
-        private bool IsThreeOfAKind()
-        {
-            return HaveNumberOfMatchingCards(3);
         }
 
         private bool HaveNumberOfMatchingCards(int numberOfmatchingCards)
@@ -79,15 +65,13 @@ namespace KataPokerHands
             return TypeOfHand() > other.TypeOfHand();
         }
 
-        private bool MyPairIsBetter(PokerHand other)
+        private bool MyMatchingCardsAreBetter(PokerHand other)
         {
-            var myCardValue = GetCardValueAsInt(CardsUsedInBestHand.First());
-            var otherHandCardValue = GetCardValueAsInt(other.CardsUsedInBestHand.First());
-            if (myCardValue == otherHandCardValue)
-            {
-                return MyHighCardIsBetter(other);
-            }
-            return myCardValue >= otherHandCardValue;
+            var myCardsValue = GetCardValueAsInt(CardsUsedInBestHand.FirstOrDefault());
+            var otherCardsValue = GetCardValueAsInt(other.CardsUsedInBestHand.FirstOrDefault());
+            if (myCardsValue != otherCardsValue)
+                return myCardsValue > otherCardsValue;
+            return MyHighCardIsBetter(other);
         }
 
         private bool MyHighCardIsBetter(PokerHand other)
@@ -136,6 +120,11 @@ namespace KataPokerHands
         public bool IsPair()
         {
             return HaveNumberOfMatchingCards(2);
+        }
+
+        private bool IsThreeOfAKind()
+        {
+            return HaveNumberOfMatchingCards(3);
         }
     }
 }
