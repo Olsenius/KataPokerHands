@@ -91,14 +91,23 @@ namespace KataPokerHands.Test
         [Test]
         public void Three_of_a_kind_should_beat_lower_three_of_a_kind()
         {
-            var hand1 = new PokerHand("2D 2C 2S");
-            var hand2 = new PokerHand("3H 3S 3D");
-            hand1.Beats(hand2).ShouldBeTrue();
-            hand2.Beats(hand1).ShouldBeFalse();
+            var deuces = new PokerHand("2D 2C 2S");
+            var threes = new PokerHand("3H 3S 3D");
+            deuces.Beats(threes).ShouldBeFalse();
+            threes.Beats(deuces).ShouldBeTrue();
         }
 
         [Test]
-        public void Three_of_a_kind_should_use_kicker_when_equel()
+        public void Three_of_a_kind_should_beat_lower_three_of_a_kind_2()
+        {
+            var deuces = new PokerHand("5D 5C 5S");
+            var threes = new PokerHand("3H 3S 3D");
+            deuces.Beats(threes).ShouldBeTrue();
+            threes.Beats(deuces).ShouldBeFalse();
+        }
+
+        [Test]
+        public void Three_of_a_kind_should_use_kicker_when_equal()
         {
             var hand1 = new PokerHand("2D 2C 2S AS");
             var hand2 = new PokerHand("2H 2S 2D KS");
