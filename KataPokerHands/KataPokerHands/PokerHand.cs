@@ -8,7 +8,7 @@ namespace KataPokerHands
     {
         private readonly string _hand;
 
-        private enum HandType { HighCard, Pair, ThreeOfAKind }
+        public enum HandType { HighCard, Pair, ThreeOfAKind }
         public IEnumerable<string> CardsUsedInBestHand { get; private set; }
 
         public PokerHand(string hand)
@@ -19,59 +19,39 @@ namespace KataPokerHands
         public bool Beats(PokerHand other)
         {
             if (TypesArentEqual(other))
-            {
                 return MyTypeIsBetter(other);
-            }
-            if (TypeOfHand() == HandType.ThreeOfAKind)
-            {
+
+            if (TypeOfHand == HandType.ThreeOfAKind)
                 return MyMatchingCardsAreBetter(other);
-            }
-            if (TypeOfHand() == HandType.Pair)
-            {
+
+            if (TypeOfHand == HandType.Pair)
                 return MyMatchingCardsAreBetter(other);
-            }
+
             return MyHighCardIsBetter(other);
         }
 
-        private HandType TypeOfHand()
+        public HandType TypeOfHand
         {
-            if (IsThreeOfAKind())
-                return HandType.ThreeOfAKind;
-
-            if (IsPair())
-                return HandType.Pair;
-            return HandType.HighCard;
-        }
-
-        private bool HaveNumberOfMatchingCards(int numberOfmatchingCards)
-        {
-            var groupsOfcards = CardsOrderedByValue().GroupBy(GetCardValueAsInt);
-
-            if (groupsOfcards.Any(x => x.Count() == numberOfmatchingCards))
+            get
             {
-                CardsUsedInBestHand = groupsOfcards.FirstOrDefault(x => x.Count() == numberOfmatchingCards);
-                return true;
+                if (IsThreeOfAKind())
+                    return HandType.ThreeOfAKind;
+
+                if (IsPair())
+                    return HandType.Pair;
+
+                return HandType.HighCard;
             }
-            return false;
         }
 
         private bool TypesArentEqual(PokerHand other)
         {
-            return TypeOfHand() != other.TypeOfHand();
+            return TypeOfHand != other.TypeOfHand;
         }
 
         private bool MyTypeIsBetter(PokerHand other)
         {
-            return TypeOfHand() > other.TypeOfHand();
-        }
-
-        private bool MyMatchingCardsAreBetter(PokerHand other)
-        {
-            var myCardsValue = GetCardValueAsInt(CardsUsedInBestHand.FirstOrDefault());
-            var otherCardsValue = GetCardValueAsInt(other.CardsUsedInBestHand.FirstOrDefault());
-            if (myCardsValue != otherCardsValue)
-                return myCardsValue > otherCardsValue;
-            return MyHighCardIsBetter(other);
+            return TypeOfHand > other.TypeOfHand;
         }
 
         private bool MyHighCardIsBetter(PokerHand other)
@@ -126,5 +106,27 @@ namespace KataPokerHands
         {
             return HaveNumberOfMatchingCards(3);
         }
+
+        private bool HaveNumberOfMatchingCards(int numberOfmatchingCards)
+        {
+            var groupsOfcards = CardsOrderedByValue().GroupBy(GetCardValueAsInt);
+
+            if (groupsOfcards.Any(x => x.Count() == numberOfmatchingCards))
+            {
+                CardsUsedInBestHand = groupsOfcards.FirstOrDefault(x => x.Count() == numberOfmatchingCards);
+                return true;
+            }
+            return false;
+        }
+
+        private bool MyMatchingCardsAreBetter(PokerHand other)
+        {
+            var myCardsValue = GetCardValueAsInt(CardsUsedInBestHand.FirstOrDefault());
+            var otherCardsValue = GetCardValueAsInt(other.CardsUsedInBestHand.FirstOrDefault());
+            if (myCardsValue != otherCardsValue)
+                return myCardsValue > otherCardsValue;
+            return MyHighCardIsBetter(other);
+        }
+
     }
 }
