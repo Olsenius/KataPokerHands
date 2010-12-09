@@ -35,10 +35,10 @@ namespace KataPokerHands
 
         private bool MyThreeOfAKindIsBetter(PokerHand other)
         {
-            var myHighCard = GetCardValueAsInt(CardsUsedInBestHand.FirstOrDefault());
-            var otherHighCard = GetCardValueAsInt(other.CardsUsedInBestHand.FirstOrDefault());
-            if (myHighCard != otherHighCard)
-                return myHighCard > otherHighCard;
+            var  myTripleValue = GetCardValueAsInt(CardsUsedInBestHand.FirstOrDefault());
+            var otherTriplevalue = GetCardValueAsInt(other.CardsUsedInBestHand.FirstOrDefault());
+            if ( myTripleValue != otherTriplevalue)
+                return  myTripleValue > otherTriplevalue;
             return MyHighCardIsBetter(other);
         }
 
@@ -54,15 +54,17 @@ namespace KataPokerHands
 
         private bool IsThreeOfAKind()
         {
-            var groupOfCards = CardsOrderedByValue().GroupBy(GetCardValueAsInt);
+            return HaveNumberOfMatchingCards(3);
+        }
 
-            foreach (IGrouping<int, string> group in groupOfCards)
+        private bool HaveNumberOfMatchingCards(int numberOfmatchingCards)
+        {
+            var groupsOfcards = CardsOrderedByValue().GroupBy(GetCardValueAsInt);
+
+            if (groupsOfcards.Any(x => x.Count() == numberOfmatchingCards))
             {
-                if (group.Count() == 3)
-                {
-                    CardsUsedInBestHand = group;
-                    return true;
-                }
+                CardsUsedInBestHand = groupsOfcards.FirstOrDefault(x => x.Count() == numberOfmatchingCards);
+                return true;
             }
             return false;
         }
@@ -133,16 +135,7 @@ namespace KataPokerHands
 
         public bool IsPair()
         {
-            HashSet<int> s = new HashSet<int>();
-            foreach (string card in _hand.Split(' '))
-            {
-                if (!s.Add(card[0]))
-                {
-                    CardsUsedInBestHand = CardsOrderedByValue().Where(x => GetCardValueAsInt(x) == GetCardValueAsInt(card));
-                    return true;
-                }
-            }
-            return false;
+            return HaveNumberOfMatchingCards(2);
         }
     }
 }
